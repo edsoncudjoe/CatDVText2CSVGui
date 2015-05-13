@@ -1,2 +1,2 @@
-# CatDVText2CSVGui
-GUI for CatDVText2CSV
+# CatDVText2XlsxGui
+GUI for CatDVText2Xlsx
