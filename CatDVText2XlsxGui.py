@@ -77,7 +77,8 @@ class CatDV2CSV(tk.Frame):
 		self.ask_open_file()
 		self.collect_titles()
 
-	def add_files_to_
+	def add_files_to_xl(self):
+		pass
 
 	def ask_save_xlsx_filename(self):
 		self.xl_filename = tkFileDialog.asksaveasfilename(**self.file_options)
