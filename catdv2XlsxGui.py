@@ -23,12 +23,14 @@ class CatDV2CSV(tk.Frame):
 		self.parent = parent
 
 		self.mainf = tk.Frame(parent, bg='blue')
-		self.labels_frame = tk.Frame(parent, bg='gray93')
-		self.btns_frame = tk.Frame(parent, bg='gray93')
+		self.open_frame = tk.Frame(self.mainf, bg='red') # chang to open frame
+		self.save_frame = tk.Frame(self.mainf, bg='yellow') # change to save frame
 
-		self.mainf.grid(sticky=N+S+E+W)
-		self.labels_frame.grid(row=0, sticky=W+E, padx=10, pady=10)
-		self.btns_frame.grid(row=0, column=1, sticky=W+E, padx=10, pady=10)	
+		self.mainf.grid(row=0, column=0, sticky=N+S+E+W)
+		# change name.
+		self.open_frame.grid(row=0, column=0, sticky=W+E, padx=10, pady=10) 
+		# change name. change row to 1, column to 0
+		self.save_frame.grid(row=1, column=0, sticky=W+E, padx=10, pady=10)	
 
 		self.mainf.rowconfigure(0, weight=4)
 		self.mainf.columnconfigure(0, weight=4)
@@ -46,27 +48,34 @@ class CatDV2CSV(tk.Frame):
 		pass
 
 	def create_widgets(self):
-		self.cdv_text_label = ttk.Label(self.labels_frame, 
-			text="Open CatDV text file.")
-		self.cdv_text_btn = ttk.Button(self.btns_frame, text="open",
-			command=self.load_catdv_data)
-		self.save_label = ttk.Label(self.labels_frame,
-			text="Save converted file as.")
-		self.save_btn = ttk.Button(self.btns_frame, text="save and convert",
-			command=self.convert_to_xlsx)
+		#change to open frame
+		self.cdv_text_label = ttk.Label(self.open_frame, 
+			text="Open CatDV text file")
+		#change to open frame
+		self.cdv_text_btn = ttk.Button(self.open_frame, text="open",
+			command=self.load_catdv_data, width=15)
+		#change to save frame
+		self.save_label = ttk.Label(self.save_frame,
+			text="Save file as Xlsx")
+		#change to save frame
+		self.save_btn = ttk.Button(self.save_frame, text="save as xlsx",
+			command=self.convert_to_xlsx, width=15)
 		#self.delete_text_label = ttk.Label(self.mainf, 
 		#	text="Delete CatDV text file?")
 		#self.delete_text_btn = ttk.Button(self.mainf, text="delete text")
-		self.quit_btn = ttk.Button(self.mainf, text="quit", command=root.quit)
+		
+		#give own frame
+		self.quit_btn = ttk.Button(self.mainf, text="quit", \
+			command=root.quit)
 
 	def grid_widgets(self):
-		self.cdv_text_label.grid(row=0, column=0)
-		self.cdv_text_btn.grid(row=0, column=0)
-		self.save_label.grid(row=1, column=0)
-		self.save_btn.grid(row=1, column=0)
+		self.cdv_text_label.grid(row=0, column=0, padx=10, pady=10)
+		self.cdv_text_btn.grid(row=0, column=1, padx=10, pady=10)
+		self.save_label.grid(row=0, column=0, padx=10, pady=10)
+		self.save_btn.grid(row=0, column=1, padx=10, pady=10)
 		#self.delete_text_label.grid(row=2, column=0)
 		#self.delete_text_btn.grid(row=2, column=1)
-		self.quit_btn.grid(row=1, column=0)
+		self.quit_btn.grid(row=2, column=0, sticky=W)
 
 	def ask_open_file(self):
 		"""Returns selected file in read mode"""
@@ -124,9 +133,9 @@ class CatDV2CSV(tk.Frame):
 
 root = tk.Tk()
 root.title('CatDV 2 XLSX')
-#root.update()
+root.update()
 #root.minsize(root.winfo_width(), root.winfo_height())
-root.geometry('400x200')
+#root.geometry('400x200')
 app = CatDV2CSV(root)
 
 root.mainloop()
