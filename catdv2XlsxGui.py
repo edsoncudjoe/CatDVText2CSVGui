@@ -38,23 +38,30 @@ class CatDV2CSV(tk.Frame):
 		self.create_menubar()
 		self.create_widgets()
 		self.grid_widgets()
+		self.create_variables()
 
 		self.open_file_options = options = {}
 		options['filetypes'] = [('text files', '.txt')]
 		self.collection = []
-
+	
+	def create_variables():
+		self.fname = tk.StringVar()
+		self.fname.set('Loaded')
 
 	def create_menubar(self):
 		pass
 
 	def create_widgets(self):
-		#change to open frame
+		
 		self.cdv_text_label = ttk.Label(self.open_frame, 
 			text="Open CatDV text file")
-		#change to open frame
+	
 		self.cdv_text_btn = ttk.Button(self.open_frame, text="open",
 			command=self.load_catdv_data, width=15)
-		#change to save frame
+
+		self.file_load_lbl = ttk.Label(self.open_frame,
+			textvariable=self.fname)
+
 		self.save_label = ttk.Label(self.save_frame,
 			text="Save file as Xlsx")
 		#change to save frame
@@ -71,6 +78,7 @@ class CatDV2CSV(tk.Frame):
 	def grid_widgets(self):
 		self.cdv_text_label.grid(row=0, column=0, padx=10, pady=10)
 		self.cdv_text_btn.grid(row=0, column=1, padx=10, pady=10)
+		self.file_load_lbl.grid(row=1, column=0, padx=10, pady=10)
 		self.save_label.grid(row=0, column=0, padx=10, pady=10)
 		self.save_btn.grid(row=0, column=1, padx=10, pady=10)
 		#self.delete_text_label.grid(row=2, column=0)
@@ -81,6 +89,7 @@ class CatDV2CSV(tk.Frame):
 		"""Returns selected file in read mode"""
 		self.cdv_file = tkFileDialog.askopenfile(
 			mode='r', **self.open_file_options)
+		self.fname.set("File loaded: {}".format(self.cdv_file))
 		return self.cdv_file
 
 	def collect_titles(self):
