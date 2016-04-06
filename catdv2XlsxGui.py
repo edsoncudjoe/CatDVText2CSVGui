@@ -2,6 +2,9 @@ import sys
 import xlsxwriter
 from PyQt4 import QtGui
 
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 
 class Txt2Xlsx(QtGui.QWidget):
 
@@ -30,6 +33,7 @@ class Txt2Xlsx(QtGui.QWidget):
 
         self.setLayout(main_grid)
 
+
         self.setGeometry(300, 300, 350, 300)
         self.setWindowTitle('CatDV to Xlsx')
         self.show()
@@ -57,19 +61,27 @@ class Txt2Xlsx(QtGui.QWidget):
 
     def build_xlsx(self, collected, xlsx_fname):
         """Creates an xlsx workbook for any size of text output."""
+        errors = []
         fname = str(xlsx_fname)
         row = 0
         col = 0
         workbook = xlsxwriter.Workbook(fname)
         worksheet = workbook.add_worksheet()
         for item in collected:
-            for i in item:
-                worksheet.write(row, col, i.rstrip())
-                col += 1
-                if col >= len(item):
-                    col = 0
-                    row += 1
+            try:
+                for i in item:
+                    worksheet.write(row, col, i.encode('utf8').rstrip())
+                    col += 1
+                    if col >= len(item):
+                        col = 0
+                        row += 1
+            except UnicodeDecodeError as ue:
+                print('UnicodeDecodeError: {}\n{}'.format(item, ue))
+                errors.append('UnicodeDecodeError: {}\n{}'.format(item, ue))
+                continue
         workbook.close()
+        for e in errors:
+            alrt = QtGui.QMessageBox.warning(self, "Unicode error", e)
         self.lbl2.setText('Saved as : {}'.format(xlsx_fname))
 
 

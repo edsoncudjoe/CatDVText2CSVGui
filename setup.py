@@ -9,12 +9,14 @@ from setuptools import setup
 
 APP = ['app.py']
 DATA_FILES = []
-OPTIONS = {'argv_emulation': True, 'includes': ['sip', 'PyQt4',
-                                                'PyQt4.QtCore', 'PyQt4.QtGui']}
+OPTIONS = {'argv_emulation': True,
+           'includes': ['sip', 'PyQt4', 'PyQt4.QtCore', 'PyQt4.QtGui'],
+           'iconfile': 't2xl.icns'
+           }
 
 setup(
     name='CatDV to XLSX',
-    version='2.0',
+    version='2.0.1',
     description='Convert CatDV .txt output to .xlsx',
     date='3-Dec-2015',
     url='https://github.com/edsoncudjoe/CatDVText2XlsxGui',
